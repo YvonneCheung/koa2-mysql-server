@@ -1,39 +1,21 @@
-var mongoose = require('mongoose'); 
+const mysql = require('../lib/mysql') //引入数据库方法
+// const jwt = require('jsonwebtoken')
+const config = require('../../config/config')
+const apiError = require('../error/apiError.js')
+// const moment = require('moment')
 
-exports.users = async (ctx, next) => {
-  ctx.body = {
-    success: true,
-    data:'success'
-  }
+exports.test = async (ctx, next) => {
+  try{
+    await mysql.query('SELECT * FROM xm_users WHERE user_id="15465"').then(res=>{
+      if(res){
+        ctx.body = apiError.getSuccessInfo(res)
+      } else {
+        ctx.body = ApiErrorNames.getErrorInfo(ApiErrorNames.INVALID_TOKEN)
+      }
+    }).catch(err => {
+      ctx.body = ApiErrorNames.getErrorInfo(ApiErrorNames.DATA_IS_WRONG)
+    })
+  }catch(error) {
+    ctx.throw(500)
 }
-/**
- * 更新用户信息操作
- * @param  {[type]}   ctx  [description]
- * @param  {Function} next [description]
- * @return {[type]}        [description]
- */
-exports.update = async (ctx, next) => {
-  var body = ctx.request.body
-  var user = ctx.session.user
-  // var fields = 'avatar,gender,age,nickname,breed'.split(',')
-
-  // fields.forEach(function(field) {
-  //   if (body[field]) {
-  //     user[field] = xss(body[field].trim())
-  //   }
-  // })
-  user = await user.save()
-  ctx.body = {
-    success: true,
-    data: {
-      user_id: user.nickname,
-      user_name: user.user_name,
-      user_password: user.avatar,
-      user_email: user.age,
-      user_avatar: user.breed,
-      user_registration_time: user.gender,
-      _id: user._id,
-      user_link:user.user_link
-    }
-  }
 }
