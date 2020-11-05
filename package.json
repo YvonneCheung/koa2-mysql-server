@@ -6,21 +6,32 @@
   "scripts": {
     "dev": "nodemon ./app.js",
     "debug": "nodemon --inspect  ./app.js",
+    "lint": "eslint --fix --ext .js,.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "is": "^3.3.0",
     "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
     "koa-router": "^9.4.0",
     "koa-static": "^5.0.0",
     "koa2-cors": "^2.0.6",
     "mongoose": "^5.10.11",
     "mysql": "^2.18.1",
     "uuid": "^8.3.1",
+    "validator": "^13.1.17",
     "xss": "^1.0.8"
   },
   "devDependencies": {
-    "nodemon": "^2.0.6"
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.12.1",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-html": "^6.1.0",
+    "eslint-plugin-standard": "^4.0.2",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.1.2"
   }
 }
