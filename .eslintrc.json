@@ -10,6 +10,7 @@
       "ecmaVersion": 8
   },
   "rules": {
+      "indent": ["error", 4],
       "no-console": 0,
       "no-unused-vars": 0,
       "linebreak-style": ["error", "unix"],
