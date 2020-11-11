@@ -10,10 +10,9 @@ const Model = {
         const data = Utils.filter(ctx.request.query, [ 'pageSize', 'pageNum' ]);
         const where = Utils.formatWhere(data, condition.fuzzy);
         const offset = (page.pageNum - 1) * page.pageSize;
-        let sql = `SELECT * FROM ${condition.table} WHERE ${where} AND delete_flag=0`;
+        let sql = `SELECT * FROM ${condition.table} ${where ? `WHERE ${where} AND delete_flag=0` : ''}`;
         sql += ` ORDER BY create_time ${condition.sort ? 'DESC' : 'ASC'}`;
         sql += ` limit ${offset},${page.pageSize};`;
-        console.log(sql);
         return new Promise((resolve, reject) => {
             db.query(sql).then(res=>{
                 resolve(res);
@@ -46,11 +45,8 @@ const Model = {
     },
     // 修改
     update (ctx, table, field) {
-        console.log(field);
         const fields = Utils.formatUpdate(field || ctx.request.body);
-        console.log(fields);
         const sql = `UPDATE ${table} SET ${fields} WHERE id=${ctx.request.query.id} AND delete_flag=0`;
-        console.log(sql);
         return new Promise((resolve, reject) => {
             db.query(sql).then(res=>{
                 resolve(res);

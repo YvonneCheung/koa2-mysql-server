@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const config = require('../../config/config');
+const Utils = require('./utils');
 
 const pool = mysql.createPool({
     host: config.database.HOST,
@@ -18,7 +19,16 @@ const query = (sql, values) => {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve(rows);
+                        const newObj = {};
+                        const data = rows.map(obj => {
+                            for (const key in obj ) {
+                                const newKey = Utils.toCamel(key);
+                                newObj[newKey] = obj[key];
+                            }
+                            obj = newObj;
+                            return obj;
+                        });
+                        resolve(data);
                     }
                     connection.end();
                 });

@@ -27,6 +27,9 @@ const Utils = {
                 if (!IS.undefined(val) && !IS.null(val) && !IS.empty(val) || IS.array.empty(val)) {
                     delete data[e];
                 }
+                if (IS.undefined(val) || IS.null(val) || IS.empty(val) || IS.array.empty(val)) {
+                    delete data[e];
+                }
             });
         }
         return data;
@@ -74,6 +77,12 @@ const Utils = {
             return item;
         });
         return arr.join(', ');
+    },
+    // 下划线转化为小驼峰
+    toCamel (str) {
+        return str.replace(/_(\w)/g, function (all, letter) {
+            return letter.toUpperCase();
+        } );
     },
 };
 
